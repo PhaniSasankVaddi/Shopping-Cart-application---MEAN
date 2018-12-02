@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend services for lab5",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhaniSasankVaddi/ece9065-pvaddi-lab5.git"
+  },
+  "author": "Phani Sasank Vaddi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhaniSasankVaddi/ece9065-pvaddi-lab5/issues"
+  },
+  "homepage": "https://github.com/PhaniSasankVaddi/ece9065-pvaddi-lab5#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.14"
+  }
+}
