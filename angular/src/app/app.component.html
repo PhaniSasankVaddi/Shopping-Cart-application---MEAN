@@ -1,37 +1,44 @@
-<div class = "headerBar">
-  <div class = "container1">
-    <div class = "navbar brand">
-      <a class = "logo" routerLink = "/">MLF</a>
-    </div>
-    
-    <div class = "navbar home">
-      <a class = "home" routerLink = "/">Home</a>
-    </div>
-    
-    <div class = "navbar items">
-      <a class = "items" routerLink = "/items">Products</a>
-    </div>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" routerLink="/"><b>MILAP</b></a>
+  <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>-->
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/items">Products <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <ul class = "nav justify-content-between">
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </ul>
+    <ul class="nav justify-content-end">
+      <li class="nav-item">
+        <a class="nav-link active" routerLink="/wishlist">Favourites</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" routerLink="/cart">
+        <span class="icon">
+        </span>
+        Cart &nbsp; <span class="tag is-light">
+        1
+        </span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/login">SignIn</a>
+      </li>
+    </ul>
   </div>
-  
-  <div class = "container2">
-    <div>
-      <a class = "actions" routerLink = "/adminActions">Admin Actions</a>
-    </div>
-  </div>
-  
-  <div class = container3>
-    <div>
-      <a class = "favourites" routerLink = "/wishlist">Favourites</a>
-    </div>
-    <div>
-      <a class = "basket" routerLink = "/cart">Basket</a>
-    </div>
-  </div>
-  
-  <div class = contaniner4>
-    <div>
-      <a class = "login" routerLink = "/login">SignIn</a>
-    </div>
-  </div>
+</nav>
+
+<div class = "main">
   <router-outlet></router-outlet>
 </div>
