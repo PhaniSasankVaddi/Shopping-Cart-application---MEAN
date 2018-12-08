@@ -18,7 +18,7 @@ const routes: Routes = [
   path:'cart', component: CartComponent
 },
 {
-  path:'login', loadChildren: './modules/auth/auth.module#AuthModule',
+  path:'login', loadChildren: './modules/auth/auth.module#AuthModule'
 }
 ];
 
