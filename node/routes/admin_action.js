@@ -28,5 +28,30 @@ router.post('/signin', function(req,res,next){
     
 });
 
+router.post('/signup',function(req,res,next){
+   adminModel.find({'email': req.body.email},(error,doc) =>{
+       if(doc.length != 0){
+           res.json({message:'Email id is already registered'});
+       }else{
+           var admin = new adminModel({
+               email:req.body.email,
+               username: req.body.username,
+               password: adminModel.hashPassword(req.body.password),
+               creation_dt: Date.now()
+           });
+           
+           let promise = admin.save();
+           
+           promise.then(function(doc){
+               return res.status(201).json({message:'Registration Successful'});
+           })
+           
+           promise.catch(function(error){
+               return res.status(501).json({message: 'Error while adding admin'});
+           })
+       }
+   }) 
+});
+
 module.exports = router;
     

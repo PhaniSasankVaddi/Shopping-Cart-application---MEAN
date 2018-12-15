@@ -22,7 +22,7 @@ app.use(cors('/*', function(req, res, next) {
 //add routing
 var userRoute = require('./routes/user_action');
 var adminRoute = require('./routes/admin_action');
-app.use('/',userRoute);
+app.use('/user',userRoute);
 app.use('/admin',adminRoute);
 
 

@@ -1,3 +1,45 @@
-<p>
-  signup works!
-</p>
+<div class = "formcontainer">
+    <div class = "formbody">
+        <form>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" 
+                        value="option1" [(ngModel)] = "userRadioInput" checked>
+                <label class="form-check-label" for="exampleRadios1">User</label>
+                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" 
+                        value="option2" [(ngModel)] = "adminRadioInput">
+                <label class="form-check-label" for="exampleRadios2">Admin</label>
+            </div>
+            <div class="form-group">
+                <label for="usernameField">Username<sup>*</sup></label>
+                <input type="text" class="form-control" id="username" name="usernameField" 
+                        placeholder="Enter username" [(ngModel)] = "username1" required/>
+            </div>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Email<sup>*</sup></label>
+                <input type="email" class="form-control" id="email" name = "emailField" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" 
+                    placeholder="Enter email" [(ngModel)]="email1" required/>
+            </div>
+            <div class="form-group">
+                <label for = "exampleInputPassword1">Password<sup>*</sup></label>
+                <input type = "password" class="form-control" name="userpassword" id="password" 
+                    [(ngModel)]="password1" placeholder="Enter Password" required/>
+            </div>
+            <div class="form-group">
+                <label for = "exampleInputPassword1">ConfirmPassword<sup>*</sup></label>
+                <input type = "password"  class="form-control" name="confirmuserpassword" id="cnfpassword1" 
+                    [(ngModel)]="confirmPassword1" placeholder="Re-enter Password" required/>
+                
+            </div>
+            <div class="alert alert-danger"
+                *ngIf="validatePassword()">Password not match
+            </div>
+            <button type="button" class="btn btn-primary" ng-disabled = "validatePassword()" (click)="onSubmit()">Submit</button>
+        </form>
+    </div>
+    <div class = "entering">
+        <a class = "register" routerLink = "/auth/login">
+             <button type = "button" class = "btn btn-secondary">SignIn</button>
+        </a>
+    </div>
+</div>
+

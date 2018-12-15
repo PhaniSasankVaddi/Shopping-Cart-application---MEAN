@@ -16,7 +16,7 @@
     <ul class = "nav justify-content-between">
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
     </ul>
     <ul class="nav justify-content-end">
@@ -28,17 +28,16 @@
         <span class="icon">
         </span>
         Cart &nbsp; <span class="tag is-light">
-        1
         </span>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" routerLink="/login">SignIn</a>
+        <a class="nav-link" routerLink="/auth">SignIn</a>
       </li>
     </ul>
   </div>
 </nav>
 
-<div class = "main">
-  <router-outlet></router-outlet>
+<div class = "jumbotron">
+   <router-outlet></router-outlet>
 </div>
