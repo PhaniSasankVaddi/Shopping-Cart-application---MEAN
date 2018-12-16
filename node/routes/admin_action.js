@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var adminModel = require('../models/admin_model');
+var fruitModel = require('../models/fruits_model');
 var jwt = require('jsonwebtoken');
 
 
@@ -51,6 +52,65 @@ router.post('/signup',function(req,res,next){
            })
        }
    }) 
+});
+
+router.post('/addItem',function(req, res, next) {
+    fruitModel.find({'fruitName': req.body.fruitName},(error,doc) =>{
+        if(doc.length !=0){
+            res.json({message:'Fruit already exists'});
+        }else{
+            var fruit = new fruitModel({
+                fruitName: req.body.fruitName,
+                alt_name: req.body.alt_name,
+                price: req.body.price,
+                availability: req.body.availability,
+                tax: req.body.tax
+            });
+            
+            let promise = fruit.save();
+            
+            promise.then(function(doc){
+                return res.status(201).json({message:'Product added successfully'});
+            });
+            
+            promise.catch(function(error){
+                return res.status(501).json({message: 'Error while adding item'})
+            })
+        }
+    })
+});
+
+router.put('/updateItem',function(req,res,next){
+    fruitModel.find({'fruitName': req.body.fruitName},(error,doc) =>{
+        if(doc.length==0){
+            return res.json({message: 'No Product found'});
+        }else{
+            fruitModel.updateOne({'fruitName':req.body.fruitName},
+            {$set:{'price':req.body.price, 'availability':req.body.availability,'tax':req.body.tax}},
+            {upsert:true},(error1) =>{
+                if(error1){
+                  return res.json({message:'Error occured while updating in db'});
+                }else{
+                  return res.json(({message:'Product Updated Successfully'}));
+                }
+            }
+            )
+        }
+    })
+});
+
+router.delete('/deleteItem', function(req,res,next){
+    fruitModel.find({'fruitName': req.body.fruitName},(error,doc) =>{
+        if(doc.length ==0){
+            res.json({message:'No Item Found'});
+        }else{
+            fruitModel.deleteOne({'fruitName': req.body.fruitName},(error) =>{
+                if(!error){
+                    return res.json({})
+                }
+            })
+        }
+    })
 });
 
 module.exports = router;

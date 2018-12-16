@@ -1,3 +1,114 @@
-<p>
-  admin works!
-</p>
+
+<div id="accordion">
+  <div class="card">
+    <div class="card-header" id="headingOne">
+      <h5 class="mb-0">
+        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Add Product
+        </button>
+      </h5>
+    </div>
+
+    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+      <div class="card-body">
+          <div class = "formcontainer">
+            <div class = "formbody">
+                <form>
+                    <div class="form-group">
+                        <label for="productnamefield">Product Name<sup>*</sup></label>
+                        <input type="text" class="form-control" id="productName_add" name="productnameField_add" 
+                                placeholder="Enter ProductName" [(ngModel)] = "itemName1_add" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="altnamefield">Alternate Name<sup>*</sup></label>
+                        <input type="text" class="form-control" id="altName_add" name="altnameField_add" 
+                                placeholder="Enter Alternate Name" [(ngModel)] = "altName1_add" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="pricefield">Price per Product<sup>*</sup></label>
+                        <input type="number" class="form-control" id="price_add" name="priceField_add" 
+                                placeholder="Enter Price" [(ngModel)] = "price1_add" min="0.1" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="availabilityfield">Availability<sup>*</sup></label>
+                        <input type="number" class="form-control" id="availability_add" name="availabilityField_add" 
+                                placeholder="Enter Availability" [(ngModel)] = "availability1_add" min= "1" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="taxfield">Tax(%)<sup>*</sup></label>
+                        <input type="number" class="form-control" id="tax_add" name="taxField_add" 
+                                placeholder="Enter Tax" [(ngModel)] = "tax1_add" min="1" required/>
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="addProduct()">Proceed</button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingTwo">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Update Product
+        </button>
+      </h5>
+    </div>
+    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+      <div class="card-body">
+         <div class = "formcontainer">
+            <div class = "formbody">
+                <form>
+                    <div class="form-group">
+                        <label for="productnamefield">Product Name<sup>*</sup></label>
+                        <input type="text" class="form-control" id="productName_update" name="productnameField_update" 
+                                placeholder="Enter ProductName" [(ngModel)] = "itemName1_update" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="pricefield">Price per Product<sup>*</sup></label>
+                        <input type="number" class="form-control" id="price_update" name="priceField_update" 
+                                placeholder="Enter Price" [(ngModel)] = "price1_update" min="0.1" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="availabilityfield">Availability<sup>*</sup></label>
+                        <input type="number" class="form-control" id="availability_update" name="availabilityField_update" 
+                                placeholder="Enter Availability" [(ngModel)] = "availability1_update" min= "1" required/>
+                    </div>
+                    <div class="form-group">
+                        <label for="taxfield">Tax(%)<sup>*</sup></label>
+                        <input type="number" class="form-control" id="tax_update" name="taxField_update" 
+                                placeholder="Enter Tax" [(ngModel)] = "tax1_update" min="1" required/>
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="updateProduct()">Proceed</button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header" id="headingThree">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Delete Product
+        </button>
+      </h5>
+    </div>
+    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+      <div class="card-body">
+            <div class = "formcontainer">
+            <div class = "formbody">
+                <form>
+                    <div class="form-group">
+                        <label for="productnamefield">Product Name<sup>*</sup></label>
+                        <input type="text" class="form-control" id="productName_delete" name="productnameField_delete" 
+                                placeholder="Enter ProductName" [(ngModel)] = "itemName1_delete" required/>
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="deleteProduct()">Proceed</button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

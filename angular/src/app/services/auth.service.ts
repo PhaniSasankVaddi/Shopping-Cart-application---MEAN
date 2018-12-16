@@ -20,4 +20,8 @@ export class AuthService {
   userRegistration(regUrl, userInfo){
     this.http.post(regUrl,userInfo,httpOptions).subscribe();
   }
+  
+  userSignIn(userLoginUrl, userCred){
+    this.http.post(userLoginUrl,userCred,httpOptions).subscribe();
+  }
 }

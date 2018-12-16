@@ -12,8 +12,8 @@ export class SignupComponent implements OnInit {
   confirmPassword1;
   email1;
   username1;
-  userRadioInput;
-  adminRadioInput;
+  /*userRadioInput;
+  adminRadioInput;*/
   
   regUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/signup";
   adminregUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/signup"
@@ -40,12 +40,11 @@ export class SignupComponent implements OnInit {
       'username' : this.username1,
       'password' : this.password1
     }
-    console.warn(this.userRadioInput);
-    if(this.userRadioInput=="option1"){
-      this.authservice.userRegistration(this.regUrl,userInfo);
-    }if(this.adminRadioInput=="option2"){
+    /*if(this.adminRadioInput=="option2"){
       this.authservice.userRegistration(this.adminregUrl,userInfo);
-    }
+    }else{*/s
+      this.authservice.userRegistration(this.regUrl,userInfo);
+    //}
   }
 
 }

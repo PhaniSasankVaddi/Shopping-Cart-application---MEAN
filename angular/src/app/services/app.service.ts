@@ -13,5 +13,12 @@ const httpOptions = {
 })
 export class AppService {
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient) { 
+    
+  }
+  
+  adminAction(baseurl,itemjson){
+    this.http.post(baseurl,itemjson,httpOptions).subscribe();
+  }
+  
 }
