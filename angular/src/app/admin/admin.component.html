@@ -151,6 +151,31 @@
       </div>
     </div>
   </div>
+    <div class="card">
+    <div class="card-header" id="headingFive">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+          Add Admin
+        </button>
+      </h5>
+    </div>
+    <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordion">
+      <div class="card-body">
+            <div class = "formcontainer">
+            <div class = "formbody">
+                <form>
+                    <div class="form-group">
+                        <label for="emailfield">Email<sup>*</sup></label>
+                        <input type="email" class="form-control" id="username_status" name="usernameField_status" placeholder="Enter EmailId"
+                                 [(ngModel)] = "username1_status" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="makeAdmin()">Proceed</button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 

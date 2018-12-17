@@ -58,7 +58,20 @@ router.post('/signin', function(req,res,next){
     
 });
 
-
+var token_decoded = '';
+function tokenVerification(req,res,next){
+    let token = req.headers.Authorization;
+    
+    jwt.verify(token,'secretkey',function(error,tokenData){
+        if(error){
+            return res.json(400).json({message:'Request Unauthorizied'});
+        }
+        if(tokenData){
+            token_decoded = tokenData;
+            next();
+        }
+    })
+}
 
 
 module.exports = router;

@@ -29,5 +29,9 @@ export class FruitsComponent implements OnInit {
   addtoCart(itemName){
     console.warn(itemName);
   }
+  
+  addtoWishlist(itemName){
+    
+  }
 
 }

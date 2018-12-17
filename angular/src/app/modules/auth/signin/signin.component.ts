@@ -32,30 +32,23 @@ export class SigninComponent implements OnInit {
       'email': this.email1,
       'password': this.password1
     }
-    console.warn(this.loginPref);
     if(this.loginPref == "admin"){
-        this.authservice.login(this.adminloginUrl,userjson).subscribe((data:any) =>{
-          console.warn(data);
-          if(data){
+        this.authservice.login(this.adminloginUrl,userjson);
+          if(this.authservice.successInd){
             this.loginfail = false;
             this.router.navigate(['/adminActions']);
-          }else{
-            this.loginfail = true;
-            this.loginMsg = "!!!Login Failed";
-           
           }
-        });
     }
     else{
-      this.authservice.login(this.loginUrl,userjson).subscribe((data:any) =>{
-        if(data){
+      this.authservice.login(this.loginUrl,userjson)
+        if(this.authservice.successInd){
           this.loginfail = false;
-          this.loginMsg = "!!!Login Failed";
-        }else{
-          this.loginfail = true;
           this.router.navigate(['/items']);
         }
-      });
+    }
+    if(!this.authservice.successInd){
+      this.loginfail = true;
+      this.loginMsg = "!!!Login Failed";
     }
     
     

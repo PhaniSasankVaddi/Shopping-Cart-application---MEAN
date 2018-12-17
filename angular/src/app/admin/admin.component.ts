@@ -21,6 +21,7 @@ export class AdminComponent implements OnInit {
   updateProUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/updateItem";
   deleteProUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/deleteItem";
   statusChangeUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/userStatus";
+  makeAdminUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/makeAdmin";
 
   constructor(private appservice: AppService) { }
 
@@ -73,5 +74,11 @@ export class AdminComponent implements OnInit {
     }
     this.appservice.putRequest(this.statusChangeUrl,userjson).subscribe();
   }
-
+  
+  makeAdmin(){
+    let userjson = {
+      'email':this.username1_status
+    }
+    this.appservice.postRequest(this.makeAdminUrl,userjson).subscribe();
+  }
 }

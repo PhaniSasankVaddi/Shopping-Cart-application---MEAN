@@ -1,6 +1,9 @@
 <div class = "formcontainer">
     <div class = "formbody">
         <form>
+            <div class="alert alert-danger" role="alert" *ngIf= "loginfail">
+                 <strong>{{loginMsg}}</strong>
+            </div>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" 
                         value="user" [(ngModel)] = "loginPref" checked>

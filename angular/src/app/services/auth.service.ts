@@ -4,14 +4,16 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json',
-    'Authorization': 'my-auth-token'
-  })
+    'Authorization': localStorage.getItem('jwt')
+  }),
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  
+  successInd: boolean;
 
   constructor(private http : HttpClient) {
     
@@ -22,7 +24,14 @@ export class AuthService {
   }
   
   login(baseUrl,credentials){
-     return this.http.post(baseUrl,credentials,httpOptions);
+     return this.http.post(baseUrl,credentials,httpOptions).subscribe((data:any) =>{
+        if(data){
+          this.successInd = true;
+          localStorage.setItem('jwt',data);
+        }else{
+          this.successInd = false;
+        }
+      });
   }
   
 }                                                                   

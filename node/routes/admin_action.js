@@ -56,7 +56,7 @@ router.post('/signup',function(req,res,next){
    }) 
 });
 
-router.post('/addItem',function(req, res, next) {
+router.post('/addItem', tokenVerification, function(req, res, next) {
     fruitModel.find({'fruitName': req.body.fruitName},(error,doc) =>{
         if(doc.length !=0){
             res.json({message:'Fruit already exists'});
@@ -83,7 +83,7 @@ router.post('/addItem',function(req, res, next) {
     })
 });
 
-router.put('/updateItem',function(req,res,next){
+router.put('/updateItem', tokenVerification, function(req,res,next){
     fruitModel.findOne({'fruitName': req.body.fruitName},(error,doc) =>{
         if(doc.length==0){
             return res.json({message: 'No Product found'});
@@ -102,7 +102,7 @@ router.put('/updateItem',function(req,res,next){
     })
 });
 
-router.post('/deleteItem', function(req,res,next){
+router.post('/deleteItem',tokenVerification, function(req,res,next){
     fruitModel.findOne({'fruitName': req.body.fruitName},(error,doc) =>{
         if(doc.length ==0){
             res.json({message:'No Item Found'});
@@ -118,8 +118,8 @@ router.post('/deleteItem', function(req,res,next){
     })
 });
 
-router.put('/userStatus', function(req,res,next){
-    userModel.find({'email': req.body.email},(error,doc) =>{
+router.put('/userStatus', tokenVerification, function(req,res,next){
+    userModel.findOne({'email': req.body.email},(error,doc) =>{
         if(doc.length==0){
             return res.json({message:"No user exists"});
         }else{
@@ -151,7 +151,50 @@ router.put('/userStatus', function(req,res,next){
 
 router.put('/comment', function(req,res,next){
     
-})
+});
+
+router.post('/makeAdmin', tokenVerification, function(req,res,next){
+    userModel.findOne({'email':req.body.email},(error,doc) =>{
+        if(doc.length==0){
+            return res.status(400).json({message:'No user found'});
+        }else{
+            var admin = new adminModel({
+                email:doc.email,
+                password:doc.password,
+                username: doc.username,
+                creation_dt: Date.now()
+            });
+            
+            let promise = admin.save();
+            
+            promise.then(function(doc){
+                return res.status(201).json({message:'Admin added Successfully'});
+            });
+            
+            promise.catch(function(error){
+                return res.status(410).json({message:'Error while adding admin'});
+            })
+            
+        }
+    })
+    
+});
+
+var token_decoded = '';
+function tokenVerification(req,res,next){
+    let token = req.headers.Authorization;
+    
+    jwt.verify(token,'secretkey',function(error,tokenData){
+        if(error){
+            return res.json(400).json({message:'Request Unauthorizied'});
+        }
+        if(tokenData){
+            token_decoded = tokenData;
+            console.log("****************"+token_decoded);
+            next();
+        }
+    })
+}
 
 module.exports = router;
     
