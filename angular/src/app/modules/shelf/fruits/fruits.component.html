@@ -29,8 +29,8 @@
 							              <!--<img data-src="holder.js/100px180/?text=Image" alt="Image [100%x180]" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">-->
 							              <div class="card-block">
 							                    <p class="card-text">{{product.about}}</p>
-							                    <a href="#" class="card-link">Add to Cart</a>
-							                    <a href="#" class="card-link">Comment</a>
+							                    <button type = "button" class = "btn btn-primary" (click)="addtoCart(product.fruitName)">Add to Cart</button>
+							                    <button type = "button" class = "btn btn-primary" (click)="addtoWishlist(product.fruitName)">Add to Favourites</button>
 							              </div>
 							            </div>
 						            </div>

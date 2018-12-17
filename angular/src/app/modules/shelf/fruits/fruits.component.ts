@@ -25,5 +25,9 @@ export class FruitsComponent implements OnInit {
   ngOnInit() {
     
   }
+  
+  addtoCart(itemName){
+    console.warn(itemName);
+  }
 
 }
