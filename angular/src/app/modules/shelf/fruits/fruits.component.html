@@ -1,3 +1,45 @@
-<p>
-  fruits works!
-</p>
+<section>
+	<div class="container">
+	    <h1>Fruit Shelf</h1>
+        <ul>
+            <li *ngFor = 'let product of fruits'>
+                <div class="row">
+			        <div class="col-sm-6 col-lg-4">
+        		        <!-- Card Flip -->
+				        <div class="card-flip">
+					        <div class="flip">
+						        <div class="front">
+							    <!-- front content -->
+							        <div class="card">
+							          <img class="card-img-top" data-src="holder.js/100px180/" alt="100%x180" style="height: 180px; width: 100%; display: block;" data-holder-rendered="true">
+							          <div class="card-block">
+							            <h4 class="card-title">{{product.fruitName}}</h4>
+							            <p class="card-text">Price/Item: {{product.price}}<br>Availability: {{product.availability}}</p>
+							            <a href="#" class="btn btn-primary">See More</a>
+							          </div>
+							        </div>
+						        </div>
+						            <div class="back">
+							        <!-- back content -->
+							            <div class="card">
+							              <div class="card-block">
+							                <h4 class="card-title">Card Flip</h4>
+							                <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+							              </div>
+							              <!--<img data-src="holder.js/100px180/?text=Image" alt="Image [100%x180]" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">-->
+							              <div class="card-block">
+							                    <p class="card-text">{{product.about}}</p>
+							                    <a href="#" class="card-link">Add to Cart</a>
+							                    <a href="#" class="card-link">Comment</a>
+							              </div>
+							            </div>
+						            </div>
+					            </div>
+				            </div>
+        		        <!-- End Card Flip -->
+			            </div>
+		            </div>
+            </li>
+        </ul>
+	</div>
+</section>

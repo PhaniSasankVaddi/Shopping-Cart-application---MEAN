@@ -8,13 +8,19 @@ import { AppService } from '../services/app.service';
 })
 export class AdminComponent implements OnInit {
   
-  itemName1_add; altName1_add; price1_add; availability1_add; tax1_add;
+  itemName1_add; altName1_add; price1_add; availability1_add; tax1_add; description1_add;
   itemName1_update; price1_update; availability1_update; tax1_update;
   itemName1_delete;
+  
+  username1_status; userStatus;
+  
+  successMsg;
+  successInd: boolean;
   
   addProUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/addItem";
   updateProUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/updateItem";
   deleteProUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/deleteItem";
+  statusChangeUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/userStatus";
 
   constructor(private appservice: AppService) { }
 
@@ -27,9 +33,15 @@ export class AdminComponent implements OnInit {
       'alt_name': this.altName1_add,
       'price': this.price1_add,
       'availability': this.availability1_add,
-      'tax': this.tax1_add
+      'tax': this.tax1_add,
+      'about': this.description1_add
     }
-    this.appservice.adminAction(addProUrl,itemjson);
+    this.appservice.postRequest(this.addProUrl,itemjson).subscribe((data:any) =>{
+      this.successMsg = data.message;
+      if(data){
+         this.successInd = true;
+      }
+    });
   }
   
   updateProduct(){
@@ -39,14 +51,27 @@ export class AdminComponent implements OnInit {
       'availability': this.availability1_update,
       'tax': this.tax1_update
     }
-    this.appservice.adminAction(updateProUrl,itemjson);
+    this.appservice.putRequest(this.updateProUrl,itemjson).subscribe((data:any) =>{
+      this.successMsg = data.message;
+      if(data){
+        this.successInd = true;
+      }
+    });
   }
   
   deleteProduct(){
     let itemjson = {
       'fruitName': this.itemName1_delete
     }
-    this.appservice.adminAction(deleteProUrl,itemjson);
+    this.appservice.postRequest(this.deleteProUrl,itemjson).subscribe();
+  }
+  
+  statusChange(){
+    let userjson = {
+      'email':this.username1_status,
+      'action' : this.userStatus
+    }
+    this.appservice.putRequest(this.statusChangeUrl,userjson).subscribe();
   }
 
 }

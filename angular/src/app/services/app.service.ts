@@ -17,8 +17,19 @@ export class AppService {
     
   }
   
-  adminAction(baseurl,itemjson){
-    this.http.post(baseurl,itemjson,httpOptions).subscribe();
+  postRequest(baseurl,itemjson){
+    return this.http.post(baseurl,itemjson,httpOptions);
   }
   
+  putRequest(baseurl,itemjson){
+    return this.http.put(baseurl,itemjson,httpOptions);
+  }
+  
+  deleteRequest(baseurl,itemjson){
+    return this.http.delete(baseurl,itemjson);
+  }
+  
+  getFruits(baseurl){
+    return this.http.get(baseurl,httpOptions);
+  }
 }

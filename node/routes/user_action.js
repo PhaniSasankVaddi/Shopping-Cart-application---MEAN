@@ -13,6 +13,7 @@ router.post('/signup',function(req,res,next){
       email: req.body.email,
       username: req.body.username,
       password: userModel.hashPassword(req.body.password),
+      active_ind: "Y",
       creation_dt: Date.now()
   });
 
@@ -35,14 +36,17 @@ router.post('/signin', function(req,res,next){
    
    promise.then(function(person){
      if(person){
-       if(person.isValid(req.body.password)){
-         let webToken = jwt.sign({email:person.email},'secretkey',{expiresIn : '1h'});
-         return res.status(200).json(webToken);
-       }
-       else{
-         return res.status(403).json({message:'Invalid Credentials'});
-       }
-     }
+        if(person.active_ind =="Y"){
+            if(person.isValid(req.body.password)){
+                let webToken = jwt.sign({email:person.email},'secretkey',{expiresIn : '1h'});
+                return res.status(200).json(webToken);
+            }else{
+                return res.status(403).json({message:'Invalid Credentials'});
+            }
+        }else{
+            return res.status(410).json({message:'User is not active. Please contact Store Manager'})
+        }
+    }
      else{
        return res.status(410).json({message:'User not found. Please Register'});
      }
@@ -53,6 +57,7 @@ router.post('/signin', function(req,res,next){
    });
     
 });
+
 
 
 

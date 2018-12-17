@@ -22,8 +22,10 @@ app.use(cors('/*', function(req, res, next) {
 //add routing
 var userRoute = require('./routes/user_action');
 var adminRoute = require('./routes/admin_action');
+var fruitRoute = require('./routes/fruit_action');
 app.use('/user',userRoute);
 app.use('/admin',adminRoute);
+app.use('/fruit', fruitRoute);
 
 
 //add port on which app is running

@@ -21,7 +21,8 @@ export class AuthService {
     this.http.post(regUrl,userInfo,httpOptions).subscribe();
   }
   
-  userSignIn(userLoginUrl, userCred){
-    this.http.post(userLoginUrl,userCred,httpOptions).subscribe();
+  login(baseUrl,credentials){
+     return this.http.post(baseUrl,credentials,httpOptions);
   }
-}
+  
+}                                                                   

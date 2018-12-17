@@ -12,8 +12,7 @@ export class SignupComponent implements OnInit {
   confirmPassword1;
   email1;
   username1;
-  /*userRadioInput;
-  adminRadioInput;*/
+  /*signupPref;*/
   
   regUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/signup";
   adminregUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/signup"
@@ -40,9 +39,9 @@ export class SignupComponent implements OnInit {
       'username' : this.username1,
       'password' : this.password1
     }
-    /*if(this.adminRadioInput=="option2"){
+    /*if(this.signupPref=="admin"){
       this.authservice.userRegistration(this.adminregUrl,userInfo);
-    }else{*/s
+    }else{*/
       this.authservice.userRegistration(this.regUrl,userInfo);
     //}
   }

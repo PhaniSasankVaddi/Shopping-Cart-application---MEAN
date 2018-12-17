@@ -6,7 +6,9 @@ var fruitSchema = new schema({
     alt_name: String,
     price: {type: Number, required:[true,'Price is mandatory']},
     availability: {type: Number, required:[true,'Availability is mandatory']},
-    tax: {type: Number, required:[true,'Tax is mandatory']}
+    tax: {type: Number, required:[true,'Tax is mandatory']},
+    comment: Array,
+    about: String
 })
 
 module.exports = mongoose.model('Fruit',fruitSchema);

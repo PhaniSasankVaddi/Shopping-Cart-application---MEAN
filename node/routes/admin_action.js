@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var adminModel = require('../models/admin_model');
 var fruitModel = require('../models/fruits_model');
+var userModel = require('../models/user_model');
+var commentModel = require('../models/comment_model');
 var jwt = require('jsonwebtoken');
 
 
@@ -64,7 +66,8 @@ router.post('/addItem',function(req, res, next) {
                 alt_name: req.body.alt_name,
                 price: req.body.price,
                 availability: req.body.availability,
-                tax: req.body.tax
+                tax: req.body.tax,
+                about: req.body.about
             });
             
             let promise = fruit.save();
@@ -81,7 +84,7 @@ router.post('/addItem',function(req, res, next) {
 });
 
 router.put('/updateItem',function(req,res,next){
-    fruitModel.find({'fruitName': req.body.fruitName},(error,doc) =>{
+    fruitModel.findOne({'fruitName': req.body.fruitName},(error,doc) =>{
         if(doc.length==0){
             return res.json({message: 'No Product found'});
         }else{
@@ -99,19 +102,56 @@ router.put('/updateItem',function(req,res,next){
     })
 });
 
-router.delete('/deleteItem', function(req,res,next){
-    fruitModel.find({'fruitName': req.body.fruitName},(error,doc) =>{
+router.post('/deleteItem', function(req,res,next){
+    fruitModel.findOne({'fruitName': req.body.fruitName},(error,doc) =>{
         if(doc.length ==0){
             res.json({message:'No Item Found'});
         }else{
             fruitModel.deleteOne({'fruitName': req.body.fruitName},(error) =>{
                 if(!error){
-                    return res.json({})
-                }
+                    return res.json({message:'Product deleted successfully'});
+                }else{
+                    return res.json({message:'Error while deleting the product'});
+                }    
             })
         }
     })
 });
+
+router.put('/userStatus', function(req,res,next){
+    userModel.find({'email': req.body.email},(error,doc) =>{
+        if(doc.length==0){
+            return res.json({message:"No user exists"});
+        }else{
+            if(doc.active_ind=="Y"){
+                userModel.updateOne({'email':req.body.email},
+                {$set:{'active_ind':"N"}},
+                {upsert:true},(error1) =>{
+                if(error1){
+                    return res.json({message: 'Error occured while updating in db'});
+                }else{
+                    return res.json(({message:'User-'+doc.username+'Deactivated'}));
+                }
+            })
+            }else{
+                userModel.updateOne({'email':req.body.email},
+                {$set:{'active_ind':"Y"}},
+                {upsert:true},(error1) =>{
+                if(error1){
+                    return res.json({message: 'Error occured while updating in db'});
+                }else{
+                    return res.json(({message:'User-'+doc.username+'Activated'}));
+                }
+            })
+            }
+            
+        }
+    })
+})
+
+router.put('/comment', function(req,res,next){
+    
+})
 
 module.exports = router;
     

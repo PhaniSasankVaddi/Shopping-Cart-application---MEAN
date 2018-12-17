@@ -1,17 +1,19 @@
 
 <div id="accordion">
-  <div class="card">
+    <div class="alert alert-success" role="alert" *ngIf= "successInd">
+         <strong>{{successMsg}}</strong>
+    </div>
+    <div class="card">
     <div class="card-header" id="headingOne">
       <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
           Add Product
         </button>
       </h5>
     </div>
-
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
       <div class="card-body">
-          <div class = "formcontainer">
+         <div class = "formcontainer">
             <div class = "formbody">
                 <form>
                     <div class="form-group">
@@ -39,6 +41,11 @@
                         <input type="number" class="form-control" id="tax_add" name="taxField_add" 
                                 placeholder="Enter Tax" [(ngModel)] = "tax1_add" min="1" required/>
                     </div>
+                    <div class="form-group">
+                        <label for="aboutfield">Description<sup>*</sup></label>
+                        <textarea class="form-control" id="description_add" rows="3" name = "descriptionField_add"
+                                [(ngModel)]="description1_add" required></textarea>
+                     </div>
                     <button type="button" class="btn btn-primary" (click)="addProduct()">Proceed</button>
                 </form>
             </div>
@@ -46,7 +53,7 @@
       </div>
     </div>
   </div>
-  <div class="card">
+    <div class="card">
     <div class="card-header" id="headingTwo">
       <h5 class="mb-0">
         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -86,7 +93,7 @@
       </div>
     </div>
   </div>
-  <div class="card">
+    <div class="card">
     <div class="card-header" id="headingThree">
       <h5 class="mb-0">
         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
@@ -111,4 +118,41 @@
       </div>
     </div>
   </div>
+    <div class="card">
+    <div class="card-header" id="headingFour">
+      <h5 class="mb-0">
+        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+          Deactivate User
+        </button>
+      </h5>
+    </div>
+    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+      <div class="card-body">
+            <div class = "formcontainer">
+            <div class = "formbody">
+                <form>
+                    <div class="form-group">
+                        <label for="emailfield">Email<sup>*</sup></label>
+                        <input type="email" class="form-control" id="username_status" name="usernameField_status" placeholder="Enter EmailId"
+                                 [(ngModel)] = "username1_status" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required/>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" 
+                            value="deactivate" [(ngModel)] = "userStatus" checked>
+                        <label class="form-check-label" for="exampleRadios1">Deactivate</label><br>
+                        <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" 
+                                value="activate" [(ngModel)] = "userStatus">
+                        <label class="form-check-label" for="exampleRadios2">Activate</label>
+                    </div>
+                    <button type="button" class="btn btn-primary" (click)="statusChange()">Proceed</button>
+                </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+
+
+
