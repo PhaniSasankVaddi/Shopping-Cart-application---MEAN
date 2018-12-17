@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from  '../../../services/auth.service';
 
@@ -14,6 +14,7 @@ export class SigninComponent implements OnInit {
   password1;
   loginfail:boolean;
   loginMsg;
+  @Output() onLogin: EventEmitter<any> = new EventEmitter();
   
   
   loginUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/signin";
@@ -33,16 +34,19 @@ export class SigninComponent implements OnInit {
       'password': this.password1
     }
     if(this.loginPref == "admin"){
-        this.authservice.login(this.adminloginUrl,userjson);
+        this.authservice.login(this.adminloginUrl,userjson,this.loginPref);
           if(this.authservice.successInd){
+            console.log(localStorage.getItem('jwt'));
             this.loginfail = false;
+            this.onLogin.emit();
             this.router.navigate(['/adminActions']);
           }
     }
     else{
-      this.authservice.login(this.loginUrl,userjson)
+      this.authservice.login(this.loginUrl,userjson,this.loginPref);
         if(this.authservice.successInd){
           this.loginfail = false;
+          this.onLogin.emit();
           this.router.navigate(['/items']);
         }
     }

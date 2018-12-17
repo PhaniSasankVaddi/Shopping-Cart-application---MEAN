@@ -8,32 +8,26 @@ var jwt = require('jsonwebtoken');
 
 
 router.post('/signin', function(req,res,next){
-    let promise = adminModel.findOne({email:req.body.email}).exec();
     
-    promise.then(function(person){
-        if(person){
-            if(person.isValid(req.body.password)){
-                let webToken = jwt.sign({email:person.email},'secretkey',{expiresIn : '1h'});
+    adminModel.findOne({'email':req.body.email},(error,doc) =>{
+        if(doc){
+            if(doc.isValid(req.body.password)){
+                let webToken = jwt.sign({email:doc.email},'secretkey',{expiresIn : '1h'});
                 return res.status(200).json(webToken);
-            }
-            else{
+            }else{
                 return res.status(403).json({message:'Invalid Credentials'});
             }
         }
         else{
             return res.status(510).json({message:'Admin NotFound'});
         }
-    });
-    
-    promise.catch(function (error){
-        return res.status(510).json({message:'Error while fetching admin details'});
-    });
+    })
     
 });
 
 router.post('/signup',function(req,res,next){
    adminModel.findOne({'email': req.body.email},(error,doc) =>{
-       if(doc!=null && doc.length != 0){
+       if(doc){
            res.json({message:'Email id is already registered'});
        }else{
            var admin = new adminModel({
@@ -58,7 +52,7 @@ router.post('/signup',function(req,res,next){
 
 router.post('/addItem', tokenVerification, function(req, res, next) {
     fruitModel.findOne({'fruitName': req.body.fruitName},(error,doc) =>{
-        if(doc!=null && doc.length !=0){
+        if(doc){
            return res.json({message:'Fruit already exists'});
         }else{
             var fruit = new fruitModel({
@@ -85,7 +79,7 @@ router.post('/addItem', tokenVerification, function(req, res, next) {
 
 router.put('/updateItem', tokenVerification, function(req,res,next){
     fruitModel.findOne({'fruitName': req.body.fruitName},(error,doc) =>{
-        if(doc==null || doc.length==0){
+        if(!doc){
             return res.json({message: 'No Product found'});
         }else{
             fruitModel.updateOne({'fruitName':req.body.fruitName},
@@ -104,7 +98,7 @@ router.put('/updateItem', tokenVerification, function(req,res,next){
 
 router.post('/deleteItem',tokenVerification, function(req,res,next){
     fruitModel.findOne({'fruitName': req.body.fruitName},(error,doc) =>{
-        if(doc==null || doc.length ==0){
+        if(!doc){
             res.json({message:'No Item Found'});
         }else{
             fruitModel.deleteOne({'fruitName': req.body.fruitName},(error) =>{
@@ -120,7 +114,7 @@ router.post('/deleteItem',tokenVerification, function(req,res,next){
 
 router.put('/userStatus', tokenVerification, function(req,res,next){
     userModel.findOne({'email': req.body.email},(error,doc) =>{
-        if(doc==null || doc.length==0){
+        if(!doc){
             return res.json({message:"No user exists"});
         }else{
             if(doc.active_ind=="Y"){
@@ -155,7 +149,7 @@ router.put('/comment', function(req,res,next){
 
 router.post('/makeAdmin', tokenVerification, function(req,res,next){
     userModel.findOne({'email':req.body.email},(error,doc) =>{
-        if(doc==null || doc.length==0){
+        if(!doc){
             return res.status(400).json({message:'No user found'});
         }else{
             var admin = new adminModel({
@@ -183,11 +177,13 @@ router.post('/makeAdmin', tokenVerification, function(req,res,next){
 var token_decoded = '';
 function tokenVerification(req,res,next){
     let token = req.headers.authorization;
+    console.log(token);
     jwt.verify(token,'secretkey',function(error,tokenData){
         if(error){
             return res.status(400).json({message:'Request Unauthorizied'});
         }
         if(tokenData){
+            console.log(tokenData);
             token_decoded = tokenData;
             next();
         }

@@ -20,14 +20,25 @@ export class AuthService {
   }
   
   userRegistration(regUrl, userInfo){
-    this.http.post(regUrl,userInfo,httpOptions).subscribe();
+    this.http.post(regUrl,userInfo).subscribe((data:any) =>{
+      if(data){
+        this.successInd = true;
+      }else{
+        this.successInd = false;
+      }
+    });
   }
   
-  login(baseUrl,credentials){
-     return this.http.post(baseUrl,credentials,httpOptions).subscribe((data:any) =>{
+  login(baseUrl,credentials, loginPref){
+     return this.http.post(baseUrl,credentials).subscribe((data:any) =>{
         if(data){
           this.successInd = true;
           localStorage.setItem('jwt',data);
+          if(loginPref == "admin"){
+              localStorage.setItem('isAdmin', 'true');
+          }else{
+            localStorage.setItem('isAdmin', 'false');
+          }
         }else{
           this.successInd = false;
         }

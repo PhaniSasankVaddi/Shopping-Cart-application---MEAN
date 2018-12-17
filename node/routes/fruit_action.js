@@ -6,7 +6,7 @@ router.get('/load', function(req,res,next){
     fruitModel.find({'availability':{$gt: 0}},(error,items) =>{
         if(error){
             return res.json({message:'Error occured while fetching fruits'});
-        }else if(items.length ==0){
+        }else if(!items){
             return res.json({message:'No items in the shelf'});
         }else{
             return res.send(items);

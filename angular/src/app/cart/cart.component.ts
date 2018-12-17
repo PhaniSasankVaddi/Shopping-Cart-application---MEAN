@@ -11,6 +11,7 @@ export class CartComponent implements OnInit {
   constructor(private router : Router) { }
 
   ngOnInit() {
+    localStorage.clear();
     if(!localStorage.getItem('jwt')){
       this.router.navigate(['/auth/login']);
     }

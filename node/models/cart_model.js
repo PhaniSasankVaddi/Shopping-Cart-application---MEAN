@@ -3,9 +3,11 @@ var schema = mongoose.Schema;
 
 var cartSchema = new schema({
     userId: Number,
-    items: Array,
-    quantity: Number,
+    fruitName: String,
+    availability: Number,
+    tax: Number,
     price: Number,
+    quantity: Number,
     total: Number
 })
 

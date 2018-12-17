@@ -10,7 +10,10 @@ export class AppComponent implements OnInit {
   toggleMenu = false;
   authName;
   
-  constructor(private router : Router) { }
+  constructor(private router : Router) {
+    setInterval(() => {
+      this.ngOnInit();
+    }, 2000);}
   
   ngOnInit() {
     if(localStorage.getItem('jwt')){
@@ -27,4 +30,5 @@ export class AppComponent implements OnInit {
     }
     this.router.navigate(['/auth/login']);
   }
+  
 }
