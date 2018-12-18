@@ -218,6 +218,36 @@ router.post('/movetoCart', tokenVerification, function(req,res,next){
   
 });
 
+router.post('/updateItems',tokenVerification, function(req,res,next){
+    req.body.items.forEach(item =>{
+      fruitModel.findOne({'fruitName':item.fruitName},(error,fruit) =>{
+      if(fruit){
+        fruitModel.updateOne({'fruitName':item.fruitName},
+        {$set:{'availability':fruit.availability-item.quantity}},
+        {upsert:true},(error1) =>{
+          if(error1){
+             //res.status(404).json({message:'Error while updating products in cart'});
+          }else{
+             //res.status(200).json({message:'Items updated successfully'});
+          }
+        })
+      }else{
+        res.status(400).status({message:"Item not found to update"});
+      }
+    })
+    })
+});
+
+router.post('/clearCart',tokenVerification, function(req,res,next){
+  cartModel.deleteMany({'userId':token_decoded.email},(error,items)=>{
+    if(error){
+      res.status(400).json({message:'Error while emptying the cart'});
+    }else{
+      res.status(200).json({message:'Cart cleared successfully'});
+    }
+  })
+})
+
 var token_decoded = '';
 function tokenVerification(req,res,next){
     let token = req.headers.authorization;

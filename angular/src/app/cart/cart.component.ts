@@ -10,8 +10,11 @@ import { AppService } from '../services/app.service';
 export class CartComponent implements OnInit {
   
   products:any = [];
+  grandtotal = 0;
   
   fetchcartUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/fetchCart";
+  updateItemsUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/updateItems";
+  clearcartUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/clearCart";
   
   constructor(private router : Router, private appservice: AppService) { 
     
@@ -22,10 +25,16 @@ export class CartComponent implements OnInit {
       this.router.navigate(['/auth/login']);
     }else{
       this.appservice.getRequest(this.fetchcartUrl).subscribe((items:any) =>{
+        if(items){
         items.forEach(product =>{
         this.products.push(product);
       })
       })
+      }else{
+        setInterval(() => {this.router.navigate[('/items')]}, 5000);
+        
+      }
+      }
     }
   }
   
@@ -33,9 +42,10 @@ export class CartComponent implements OnInit {
     //console.log(this.quantity);
   }
   
-  buyNow(){
-    
-    
+  calgrandtotal(){
+    for(var k=0;k<this.products.length;k++){
+      this.grandtotal = this.grandtotal+ this.products[k].total;
+    }
   }
   
   changeQuantity(event){
@@ -55,6 +65,21 @@ export class CartComponent implements OnInit {
         this.products.splice(k,1);
       }
     }
+  }
+  
+  buyNow(){
+    var itemjson = {
+      'items': this.products
+    };
+    this.appservice.postRequest(this.updateItemsUrl,itemjson).subscribe((items:any) =>{
+      this.clearCart();
+      localStorage.clear();
+    })
+  }
+  
+  clearCart(){
+    this.appservice.postRequest(this.clearcartUrl,'').subscribe();
+      this.router.navigate(['/items']);
   }
 
 }
