@@ -16,10 +16,10 @@
       <td>{{product.fruitName}}</td>
       <td>{{product.price}}</td>
       <td>{{product.tax}}</td>
-      <td><input type="Number" class="form-control" id="quantity" name="{{product.fruitName}}" placeholder="Enter Quantity"
-                         value = {{product.quantity}} min="1" max ="{{product.availability}}" /></td>
-      <td><input type="Number" class="form-control" id="{{product.fruitName}}" name="{{product.fruitName}}"
-                         value = {{product.total}} readOnly /></td>
+      <td><input type="Number" class="form-control" id="{{product.fruitName}}" name="{{product.fruitName}}" placeholder="Enter Quantity"
+                value = {{product.quantity}} min="1" max ="{{product.availability}}" (keyup) = "changeQuantity($event)" (click) = "changeQuantity($event)"/></td>
+      <td>{{product.total}}</td>
+      <td><button type="button" class="close" aria-label="Close" (click) = "deleteItem(product.fruitName)"><span aria-hidden="true">&times;</span></button></td>          
     </tr>
   </tbody>
 </table>

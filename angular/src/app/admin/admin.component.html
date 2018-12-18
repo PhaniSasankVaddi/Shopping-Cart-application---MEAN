@@ -87,6 +87,11 @@
                         <input type="number" class="form-control" id="tax_update" name="taxField_update" 
                                 placeholder="Enter Tax" [(ngModel)] = "tax1_update" min="1" required/>
                     </div>
+                    <div class="form-group">
+                        <label for="aboutfield">Description<sup>*</sup></label>
+                        <textarea class="form-control" id="description_add" rows="3" name = "descriptionField_add"
+                                [(ngModel)]="description1_update" required></textarea>
+                    </div>
                     <button type="button" class="btn btn-primary" (click)="updateProduct()">Proceed</button>
                 </form>
             </div>

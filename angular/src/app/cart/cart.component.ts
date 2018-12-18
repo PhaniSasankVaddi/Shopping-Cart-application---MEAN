@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from '../services/app.service';
 
@@ -9,16 +9,12 @@ import { AppService } from '../services/app.service';
 })
 export class CartComponent implements OnInit {
   
-  products = [];
+  products:any = [];
   
   fetchcartUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/fetchCart";
   
-  @ViewChild('quantity')
-  quantity: ElementRef
-  
-  constructor(private router : Router, private appservice: AppService, private elementRef: ElementRef) { 
-    let el = this.elementRef.nativeElement;
-    console.log(el);
+  constructor(private router : Router, private appservice: AppService) { 
+    
   }
 
   ngOnInit() {
@@ -39,6 +35,26 @@ export class CartComponent implements OnInit {
   
   buyNow(){
     
+    
+  }
+  
+  changeQuantity(event){
+      for(var k=0;k<this.products.length;k++){
+        if(event.target.id==this.products[k].fruitName){
+          this.products[k].quantity = event.target.value;
+          let withoutTax = (event.target.value)*(this.products[k].price);
+          let tax = (withoutTax*this.products[k].tax)/100;
+          this.products[k].total = tax+withoutTax;
+        }
+      }
+  }
+  
+  deleteItem(itemName){
+    for(var k=0;k<this.products.length;k++){
+      if(itemName == this.products[k].fruitName){
+        this.products.splice(k,1);
+      }
+    }
   }
 
 }

@@ -9,7 +9,10 @@ import { AppService } from '../../../services/app.service';
 })
 export class FruitsComponent implements OnInit {
   
+  
   fruits = [];
+  comments = [];
+  score : number = 0;
   
   loadFruitsUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/fruit/load";
   addtoCartUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/addtoCart";
@@ -26,7 +29,9 @@ export class FruitsComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    /*this.appservice.getRequest(this.loadCommentsUrl).subscribe((reviews:any) =>{
+      
+    })*/
   }
   
   addtoCart(itemName){
@@ -51,4 +56,7 @@ export class FruitsComponent implements OnInit {
     }
   }
 
+
+
 }
+

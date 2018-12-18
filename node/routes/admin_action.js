@@ -83,7 +83,7 @@ router.put('/updateItem', tokenVerification, function(req,res,next){
             return res.json({message: 'No Product found'});
         }else{
             fruitModel.updateOne({'fruitName':req.body.fruitName},
-            {$set:{'price':req.body.price, 'availability':req.body.availability,'tax':req.body.tax}},
+            {$set:{'price':req.body.price, 'availability':req.body.availability,'tax':req.body.tax,'about':req.body.about}},
             {upsert:true},(error1) =>{
                 if(error1){
                   return res.json({message:'Error occured while updating in db'});

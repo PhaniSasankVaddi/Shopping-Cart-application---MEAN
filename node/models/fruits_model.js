@@ -7,7 +7,6 @@ var fruitSchema = new schema({
     price: {type: Number, required:[true,'Price is mandatory']},
     availability: {type: Number, required:[true,'Availability is mandatory']},
     tax: {type: Number, required:[true,'Tax is mandatory']},
-    comment: Array,
     about: String
 })
 

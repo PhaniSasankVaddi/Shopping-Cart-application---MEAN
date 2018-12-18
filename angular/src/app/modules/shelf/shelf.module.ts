@@ -4,6 +4,7 @@ import { FruitsComponent } from './fruits/fruits.component';
 import { SearchComponent } from './search/search.component';
 import { ShelfRoutingModule } from './shelf-routing.module';
 
+
 @NgModule({
   declarations: [FruitsComponent, SearchComponent],
   imports: [

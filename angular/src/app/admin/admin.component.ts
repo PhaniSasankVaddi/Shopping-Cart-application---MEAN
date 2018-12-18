@@ -9,7 +9,7 @@ import { AppService } from '../services/app.service';
 export class AdminComponent implements OnInit {
   
   itemName1_add; altName1_add; price1_add; availability1_add; tax1_add; description1_add;
-  itemName1_update; price1_update; availability1_update; tax1_update;
+  itemName1_update; price1_update; availability1_update; tax1_update; description1_update;
   itemName1_delete;
   
   username1_status; userStatus;
@@ -50,7 +50,8 @@ export class AdminComponent implements OnInit {
       'fruitName': this.itemName1_update,
       'price': this.price1_update,
       'availability': this.availability1_update,
-      'tax': this.tax1_update
+      'tax': this.tax1_update,
+      'about': this.description1_update
     }
     this.appservice.putRequest(this.updateProUrl,itemjson).subscribe((data:any) =>{
       this.successMsg = data.message;

@@ -4,7 +4,8 @@
         <ul>
             <li *ngFor = 'let product of fruits'>
                 <div class="row">
-			        <div class="col-sm-6 col-lg-4">
+                	<div class="col-sm-2"></div>
+			        <div class="col-sm-8">
         		        <!-- Card Flip -->
 				        <div class="card-flip">
 					        <div class="flip">
@@ -14,7 +15,7 @@
 							          <img class="card-img-top" data-src="holder.js/100px180/" alt="100%x180" style="height: 180px; width: 100%; display: block;" data-holder-rendered="true">
 							          <div class="card-block">
 							            <h4 class="card-title">{{product.fruitName}}</h4>
-							            <p class="card-text">Price/Item: {{product.price}}<br>Availability: {{product.availability}}</p>
+							            <p class="card-text" style="text-align:center">Price/Item: {{product.price}}$<br>Availability: {{product.availability}}</p>
 							            <a href="#" class="btn btn-primary">See More</a>
 							          </div>
 							        </div>
@@ -23,12 +24,25 @@
 							        <!-- back content -->
 							            <div class="card">
 							              <div class="card-block">
-							                <h4 class="card-title">Card Flip</h4>
-							                <h6 class="card-subtitle text-muted">Support card subtitle</h6>
+							                <h4 class="card-title" style="padding-top:2%">{{product.fruitName}}</h4>
+							                <h6 class="card-subtitle text-muted" style="padding-left:5px">About:</h6>
 							              </div>
-							              <!--<img data-src="holder.js/100px180/?text=Image" alt="Image [100%x180]" data-holder-rendered="true" style="height: 180px; width: 100%; display: block;">-->
 							              <div class="card-block">
 							                    <p class="card-text">{{product.about}}</p>
+							                    <div class="descriptionField" style="margin:2%">
+                        							<label for="aboutfield">Comments</label>
+                        							<textarea class="form-control" id="description_add" rows="2" name = "descriptionField_add"></textarea>
+                    							</div>
+                    							<div class="ratingInput" style="width:25%; margin:2%">
+                    								<label for="ratingfield">Rating</label>
+                    								<input type="text" class="form-control" id="rating" name="ratingField" 
+                        										placeholder="Enter rating" value="5"/>
+                    							</div>
+							                    <ul class = "card-comments">
+							                    	<!--<li *ngFor = "let comment of comments; let i=index">
+							                    		{{comment}}
+							                    	</li>-->
+							                    </ul>
 							                    <button type = "button" class = "btn btn-primary" (click)="addtoCart(product.fruitName)">Add to Cart</button>
 							                    <button type = "button" class = "btn btn-primary" (click)="addtoWishlist(product.fruitName)">Add to Favourites</button>
 							              </div>
@@ -38,7 +52,8 @@
 				            </div>
         		        <!-- End Card Flip -->
 			            </div>
-		            </div>
+			        <div class="col-sm-2"></div>
+		        </div>
             </li>
         </ul>
 	</div>

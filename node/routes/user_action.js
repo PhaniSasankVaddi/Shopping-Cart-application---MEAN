@@ -159,7 +159,62 @@ router.get('/fetchFav', tokenVerification, function(req,res,next) {
 });
 
 router.post('/movetoCart', tokenVerification, function(req,res,next){
-  
+  favModel.findOne({'fruitName':req.body.fruitName, 'userId':token_decoded.email},(error,items) =>{
+    if(items){
+      cartModel.findOne({'fruitName':req.body.fruitName, 'userId':token_decoded.email},(error,products) =>{
+        if(products){
+          //Updating item in cart
+          cartModel.updateOne({'fruitName':products.fruitName,'userId':token_decoded.email},
+          {$set:{'quantity': products.quantity+1, 'total': (products.quantity+1)*(products.price+(products.price*products.tax)/100)}},
+          {upsert:true},(error1) =>{
+          if(error1){
+            return res.json({message:'Error while moving items to the cart'})
+          }else{
+            return res.json({message:'Items moved successfully'})
+          }
+          })
+        }else{
+          //Adding item to cart
+          
+        fruitModel.findOne({'fruitName': req.body.fruitName},(error,fruit) =>{
+          if(fruit){
+            var cartItem = new cartModel({
+              'userId':token_decoded.email,
+              'fruitName': req.body.fruitName,
+              'availability': fruit.availability,
+              'tax': fruit.tax,
+              'price': fruit.price,
+              'quantity': 1,
+              'total': (fruit.price+(fruit.price*fruit.tax)/100)
+            });
+            
+            let promise = cartItem.save();
+            
+            promise.then(function(doc){
+                return res.status(201).json({message:'Item added to cart successfully'});
+            });
+            
+            promise.catch(function(error){
+                return res.status(501).json({message: 'Error while adding item'});
+            })
+            
+          }else{
+            return res.json({message:'No fruit found to add into the cart'});
+          }
+        })
+        }
+      })
+      
+      //Deleting from wishlist
+      favModel.deleteOne({'fruitName':req.body.fruitName,'userId':token_decoded.email},(error) =>{
+        if(!error){
+            return res.json({message:'Product removed from wishlist'});
+        }else{
+            return res.json({message:'Error while deleting the product'});
+        }  
+      })
+    }
+  })
   
 });
 
