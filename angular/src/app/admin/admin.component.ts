@@ -17,12 +17,6 @@ export class AdminComponent implements OnInit {
   successMsg;
   successInd: boolean;
   
-  addProUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/addItem";
-  updateProUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/updateItem";
-  deleteProUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/deleteItem";
-  statusChangeUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/userStatus";
-  makeAdminUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/makeAdmin";
-
   constructor(private appservice: AppService) { }
 
   ngOnInit() {
@@ -37,7 +31,7 @@ export class AdminComponent implements OnInit {
       'tax': this.tax1_add,
       'about': this.description1_add
     }
-    this.appservice.postRequest(this.addProUrl,itemjson).subscribe((data:any) =>{
+    this.appservice.postRequest("/admin/addItem",itemjson).subscribe((data:any) =>{
       this.successMsg = data.message;
       if(data){
          this.successInd = true;
@@ -53,7 +47,7 @@ export class AdminComponent implements OnInit {
       'tax': this.tax1_update,
       'about': this.description1_update
     }
-    this.appservice.putRequest(this.updateProUrl,itemjson).subscribe((data:any) =>{
+    this.appservice.putRequest("/admin/updateItem",itemjson).subscribe((data:any) =>{
       this.successMsg = data.message;
       if(data){
         this.successInd = true;
@@ -65,7 +59,12 @@ export class AdminComponent implements OnInit {
     let itemjson = {
       'fruitName': this.itemName1_delete
     }
-    this.appservice.postRequest(this.deleteProUrl,itemjson).subscribe();
+    this.appservice.postRequest("/admin/deleteItem",itemjson).subscribe((data:any) =>{
+      this.successMsg = data.message;
+      if(data){
+        this.successInd = true;
+      }
+    });
   }
   
   statusChange(){
@@ -73,13 +72,22 @@ export class AdminComponent implements OnInit {
       'email':this.username1_status,
       'action' : this.userStatus
     }
-    this.appservice.putRequest(this.statusChangeUrl,userjson).subscribe();
+    this.appservice.putRequest("/admin/userStatus",userjson).subscribe((data:any) =>{
+      this.successMsg = data.message;
+      if(data){
+        this.successMsg = true;
+      }
+    });
   }
   
   makeAdmin(){
     let userjson = {
       'email':this.username1_status
     }
-    this.appservice.postRequest(this.makeAdminUrl,userjson).subscribe();
+    this.appservice.postRequest("/admin/makeAdmin",userjson).subscribe((data:any) =>{
+      if(data){
+        this.successMsg = true;
+      }
+    });
   }
 }

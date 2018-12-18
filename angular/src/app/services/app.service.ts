@@ -12,24 +12,25 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class AppService {
-
+  
+  baseUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080";
+  
   constructor(private http : HttpClient) { 
-    
   }
   
-  postRequest(baseurl,itemjson){
-    return this.http.post(baseurl,itemjson,httpOptions);
+  postRequest(route,itemjson){
+    return this.http.post(this.baseUrl+route,itemjson,httpOptions);
   }
   
-  putRequest(baseurl,itemjson){
-    return this.http.put(baseurl,itemjson,httpOptions);
+  putRequest(route,itemjson){
+    return this.http.put(this.baseUrl+route,itemjson,httpOptions);
   }
   
-  deleteRequest(baseurl,itemjson){
-    return this.http.delete(baseurl,itemjson);
+  deleteRequest(route,itemjson){
+    return this.http.delete(this.baseUrl+route,itemjson);
   }
   
-  getRequest(baseurl){
-    return this.http.get(baseurl,httpOptions);
+  getRequest(route){
+    return this.http.get(this.baseUrl+route,httpOptions);
   }
 }

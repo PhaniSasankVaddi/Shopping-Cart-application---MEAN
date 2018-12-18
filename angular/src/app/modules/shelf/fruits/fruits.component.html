@@ -16,7 +16,7 @@
 							          <div class="card-block">
 							            <h4 class="card-title">{{product.fruitName}}</h4>
 							            <p class="card-text" style="text-align:center">Price/Item: {{product.price}}$<br>Availability: {{product.availability}}</p>
-							            <a href="#" class="btn btn-primary">See More</a>
+							            <a href="#" class="btn btn-primary" style = "text-align:center">See More</a>
 							          </div>
 							        </div>
 						        </div>
@@ -31,7 +31,7 @@
 							                    <p class="card-text">{{product.about}}</p>
 							                    <div class="descriptionField" style="margin:2%">
                         							<label for="aboutfield">Comments</label>
-                        							<textarea class="form-control" id="description_add" rows="2" name = "descriptionField_add"></textarea>
+                        							<textarea class="form-control" id="description_add" rows="2" name = "descriptionField_add" [(ngModel)] = "comment"></textarea>
                     							</div>
                     							<div class="ratingInput" style="width:25%; margin:2%">
                     								<label for="ratingfield">Rating</label>
@@ -44,7 +44,8 @@
 							                    	</li>-->
 							                    </ul>
 							                    <button type = "button" class = "btn btn-primary" (click)="addtoCart(product.fruitName)">Add to Cart</button>
-							                    <button type = "button" class = "btn btn-primary" (click)="addtoWishlist(product.fruitName)">Add to Favourites</button>
+							                    <button type = "button" class = "btn btn-primary" (click)="addtoWishlist(product.fruitName)" style="margin-left:5%">Add to Favourites</button>
+							                    <button type = "button" class = "btn btn-primary" (click)="addcomment(product.fruitName,comment)" style="margin-left:5%">Add Comment</button>
 							              </div>
 							            </div>
 						            </div>

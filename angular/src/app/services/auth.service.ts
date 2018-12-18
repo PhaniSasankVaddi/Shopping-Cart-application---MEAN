@@ -14,13 +14,15 @@ const httpOptions = {
 export class AuthService {
   
   successInd: boolean;
+  
+  baseUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080";
 
   constructor(private http : HttpClient) {
     
   }
   
-  userRegistration(regUrl, userInfo){
-    this.http.post(regUrl,userInfo).subscribe((data:any) =>{
+  userRegistration(route, userInfo){
+    this.http.post(this.baseUrl+route,userInfo).subscribe((data:any) =>{
       if(data){
         this.successInd = true;
       }else{
@@ -29,8 +31,8 @@ export class AuthService {
     });
   }
   
-  login(baseUrl,credentials, loginPref){
-     return this.http.post(baseUrl,credentials).subscribe((data:any) =>{
+  login(route,credentials, loginPref){
+     return this.http.post(this.baseUrl+route,credentials).subscribe((data:any) =>{
         if(data){
           this.successInd = true;
           localStorage.setItem('jwt',data);

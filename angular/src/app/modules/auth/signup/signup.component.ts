@@ -17,9 +17,6 @@ export class SignupComponent implements OnInit {
   
   signupPref:boolean;
   signupMsg;
-  
-  regUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/signup";
-  adminregUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/admin/signup"
 
   constructor(private authservice: AuthService,
               private router : Router) { }
@@ -45,9 +42,9 @@ export class SignupComponent implements OnInit {
       'password' : this.password1
     }
     /*if(this.signupPref=="admin"){
-      this.authservice.userRegistration(this.adminregUrl,userInfo);
+      this.authservice.userRegistration("/admin/signup",userInfo);
     }else{*/
-      this.authservice.userRegistration(this.regUrl,userInfo);
+      this.authservice.userRegistration("/user/signup",userInfo);
       if(!this.authservice.successInd){
         this.signupPref = true;
         this.signupMsg = "!!!Registration Failed"

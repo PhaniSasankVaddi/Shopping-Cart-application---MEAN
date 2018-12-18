@@ -12,10 +12,6 @@ export class CartComponent implements OnInit {
   products:any = [];
   grandtotal = 0;
   
-  fetchcartUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/fetchCart";
-  updateItemsUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/updateItems";
-  clearcartUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/clearCart";
-  
   constructor(private router : Router, private appservice: AppService) { 
     
   }
@@ -24,22 +20,15 @@ export class CartComponent implements OnInit {
     if(!localStorage.getItem('jwt')){
       this.router.navigate(['/auth/login']);
     }else{
-      this.appservice.getRequest(this.fetchcartUrl).subscribe((items:any) =>{
+      this.appservice.getRequest("/user/fetchCart").subscribe((items:any) =>{
         if(items){
         items.forEach(product =>{
         this.products.push(product);
-      })
-      })
-      }else{
-        setInterval(() => {this.router.navigate[('/items')]}, 5000);
-        
+        })
       }
-      }
+      })
     }
-  }
-  
-  ngAfterViewInit(){
-    //console.log(this.quantity);
+    
   }
   
   calgrandtotal(){
@@ -71,14 +60,14 @@ export class CartComponent implements OnInit {
     var itemjson = {
       'items': this.products
     };
-    this.appservice.postRequest(this.updateItemsUrl,itemjson).subscribe((items:any) =>{
+    this.appservice.postRequest("/user/updateItems",itemjson).subscribe((items:any) =>{
       this.clearCart();
       localStorage.clear();
     })
   }
   
   clearCart(){
-    this.appservice.postRequest(this.clearcartUrl,'').subscribe();
+    this.appservice.postRequest("/user/clearCart",'').subscribe();
       this.router.navigate(['/items']);
   }
 

@@ -228,7 +228,7 @@ router.post('/updateItems',tokenVerification, function(req,res,next){
           if(error1){
              //res.status(404).json({message:'Error while updating products in cart'});
           }else{
-             //res.status(200).json({message:'Items updated successfully'});
+             res.status(200).json({message:'Items updated successfully'});
           }
         })
       }else{

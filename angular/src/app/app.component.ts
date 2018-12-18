@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   constructor(private router : Router) {
     setInterval(() => {
       this.ngOnInit();
-    }, 2000);}
+    }, 3000);}
   
   ngOnInit() {
     if(localStorage.getItem('jwt')){

@@ -9,29 +9,28 @@ import { AppService } from '../../../services/app.service';
 })
 export class FruitsComponent implements OnInit {
   
-  
   fruits = [];
   comments = [];
   score : number = 0;
-  
-  loadFruitsUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/fruit/load";
-  addtoCartUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/addtoCart";
-  addtoFavUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/addtoFav";
-  
 
   constructor(private appservice: AppService, private router: Router) { 
-    this.appservice.getRequest(this.loadFruitsUrl).subscribe((item:any) =>{
-      console.warn(item);
+    this.appservice.getRequest("/fruit/load").subscribe((item:any) =>{
       item.forEach(product =>{
         this.fruits.push(product);
       })
     });
+    
+    /*this.appservice.getRequest("/user/loadComments").subscribe((feedback:any) =>{
+      if(feedback){
+      feedback.forEach(comment =>{
+        this.comments.push(comment);
+      })
+      }
+    })*/
   }
 
   ngOnInit() {
-    /*this.appservice.getRequest(this.loadCommentsUrl).subscribe((reviews:any) =>{
-      
-    })*/
+    
   }
   
   addtoCart(itemName){
@@ -41,7 +40,7 @@ export class FruitsComponent implements OnInit {
       var itemjson = {
         'fruitName':itemName
       }
-      this.appservice.postRequest(this.addtoCartUrl,itemjson).subscribe();
+      this.appservice.postRequest("/user/addtoCart",itemjson).subscribe();
     }
   }
   
@@ -52,8 +51,12 @@ export class FruitsComponent implements OnInit {
       var itemjson = {
         'fruitName':itemName
       }
-      this.appservice.postRequest(this.addtoFavUrl,itemjson).subscribe();
+      this.appservice.postRequest("/user/addtoFav",itemjson).subscribe();
     }
+  }
+  
+  addcomment(fruitName,commentField){
+    
   }
 
 
