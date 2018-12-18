@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
 var cartSchema = new schema({
-    userId: Number,
+    userId: String,
     fruitName: String,
     availability: Number,
     tax: Number,

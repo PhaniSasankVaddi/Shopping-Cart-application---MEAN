@@ -1,3 +1,30 @@
-<p>
-  favourite works!
-</p>
+<div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf= "successInd">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+         <strong>{{successMsg}}</strong>
+    </div>
+<div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">S.No</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Price/Item</th>
+      <th scope="col">Tax(%)</th>
+      <th scope="col">Availability</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor = "let product of products; let i=index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{product.fruitName}}</td>
+      <td>{{product.price}}</td>
+      <td>{{product.tax}}</td>
+      <td>{{product.availability}}</td>
+      <td><button type="button" class="btn btn-secondary btn-sm" (click)="movetoCart(product.fruitName)">Move to Cart</button></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div>
+    <button type="button" class="btn btn-secondary" (click)="clearFav()">Clear</button>
+</div>

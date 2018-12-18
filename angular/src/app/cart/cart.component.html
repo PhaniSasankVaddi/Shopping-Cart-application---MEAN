@@ -1,3 +1,30 @@
-<p>
-  cart works!
-</p>
+<div>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">S.No</th>
+      <th scope="col">Product Name</th>
+      <th scope="col">Price/Item</th>
+      <th scope="col">Tax(%)</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price(Inc.Tax)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor = "let product of products; let i=index">
+      <th scope="row">{{i+1}}</th>
+      <td>{{product.fruitName}}</td>
+      <td>{{product.price}}</td>
+      <td>{{product.tax}}</td>
+      <td><input type="Number" class="form-control" id="quantity" name="{{product.fruitName}}" placeholder="Enter Quantity"
+                         value = {{product.quantity}} min="1" max ="{{product.availability}}" /></td>
+      <td><input type="Number" class="form-control" id="{{product.fruitName}}" name="{{product.fruitName}}"
+                         value = {{product.total}} readOnly /></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<div>
+    <button type="button" class="btn btn-primary" (click)="buyNow()">Buy Now</button>
+    <button type="button" class="btn btn-secondary" (click)="clearCart()">Clear</button>
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AppService } from '../../../services/app.service';
 
 @Component({
@@ -11,10 +12,12 @@ export class FruitsComponent implements OnInit {
   fruits = [];
   
   loadFruitsUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/fruit/load";
+  addtoCartUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/addtoCart";
+  addtoFavUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080/user/addtoFav";
   
 
-  constructor(private appservice: AppService) { 
-    this.appservice.getFruits(this.loadFruitsUrl).subscribe((item:any) =>{
+  constructor(private appservice: AppService, private router: Router) { 
+    this.appservice.getRequest(this.loadFruitsUrl).subscribe((item:any) =>{
       console.warn(item);
       item.forEach(product =>{
         this.fruits.push(product);
@@ -27,11 +30,25 @@ export class FruitsComponent implements OnInit {
   }
   
   addtoCart(itemName){
-    console.warn(itemName);
+    if(!localStorage.getItem('jwt')){
+      this.router.navigate(['/auth/login']);
+    }else{
+      var itemjson = {
+        'fruitName':itemName
+      }
+      this.appservice.postRequest(this.addtoCartUrl,itemjson).subscribe();
+    }
   }
   
   addtoWishlist(itemName){
-    
+    if(!localStorage.getItem('jwt')){
+      this.router.navigate(['/auth/login']);
+    }else{
+      var itemjson = {
+        'fruitName':itemName
+      }
+      this.appservice.postRequest(this.addtoFavUrl,itemjson).subscribe();
+    }
   }
 
 }

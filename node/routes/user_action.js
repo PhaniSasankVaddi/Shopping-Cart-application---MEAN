@@ -3,6 +3,7 @@ var router = express.Router();
 var userModel = require('../models/user_model');
 var cartModel = require('../models/cart_model');
 var fruitModel = require('../models/fruits_model');
+var favModel = require('../models/favourites_model');
 var jwt = require('jsonwebtoken');
 
 
@@ -52,20 +53,22 @@ router.post('/signin', function(req,res,next){
 });
 
 router.post('/addtoCart', tokenVerification, function(req, res, next) {
-    cartModel.findOne({'fruitName': req.body.fruitName},(error,item) =>{
+    cartModel.findOne({'fruitName': req.body.fruitName, 'userId':token_decoded.email},(error,item) =>{
       if(item){
-        cartModel.updateOne({'fruitName':req.body.fruitName},
-        {$set:{'quantity': item.quantity+1, 'total': (item.quantity+1)*(item.price+(item.price*item.tax)/100)}},
-        {upsert:true},(error1) =>{
+        if(item.availability >= item.quantity+1){
+          cartModel.updateOne({'fruitName':req.body.fruitName},
+          {$set:{'quantity': item.quantity+1, 'total': (item.quantity+1)*(item.price+(item.price*item.tax)/100)}},
+          {upsert:true},(error1) =>{
           if(error1){
             return res.json({message:'Error while adding items to the cart'})
           }else{
             return res.json({message:'Items updated successfully'})
           }
-        })
+          })
+        }
       }else{
         fruitModel.findOne({'fruitName': req.body.fruitName},(error,fruit) =>{
-          if(fruit !=null && fruit.length != 0){
+          if(fruit){
             var cartItem = new cartModel({
               'userId':token_decoded.email,
               'fruitName': req.body.fruitName,
@@ -108,14 +111,67 @@ router.get('/fetchCart', tokenVerification, function(req,res,next) {
   
 });
 
+router.post('/addtoFav', tokenVerification, function(req, res, next) {
+    favModel.findOne({'fruitName': req.body.fruitName, 'userId':token_decoded.email},(error,item) =>{
+      if(item){
+          res.status(200).json({message:'Item already added to Favourites'});
+      }else{
+        fruitModel.findOne({'fruitName': req.body.fruitName},(error,fruit) =>{
+          if(fruit){
+            var favItem = new favModel({
+              'userId':token_decoded.email,
+              'fruitName': req.body.fruitName,
+              'availability': fruit.availability,
+              'tax': fruit.tax,
+              'price': fruit.price
+            });
+            
+            let promise = favItem.save();
+            
+            promise.then(function(doc){
+                return res.status(201).json({message:'Item added to favourites successfully'});
+            });
+            
+            promise.catch(function(error){
+                return res.status(501).json({message: 'Error while adding item'});
+            })
+            
+          }else{
+            return res.json({message:'No fruit found to add to favourites'});
+          }
+        })
+      }
+    })
+});
+
+router.get('/fetchFav', tokenVerification, function(req,res,next) {
+  favModel.find({'userId': token_decoded.email},(error,items) =>{
+    if(items){
+      res.send(items);
+    }else{
+      res.status(400).json({message:'No items in the cart'});
+    }
+    if(error){
+      res.status(500).json({message:'Error while fetching items in cart'});
+    }
+  })
+  
+});
+
+router.post('/movetoCart', tokenVerification, function(req,res,next){
+  
+  
+});
+
 var token_decoded = '';
 function tokenVerification(req,res,next){
     let token = req.headers.authorization;
     jwt.verify(token,'secretkey',function(error,tokenData){
         if(error){
-            return res.json(400).json({message:'Request Unauthorizied'});
+            return res.status(400).json({message:'Request Unauthorizied'});
         }
         if(tokenData){
+          console.log(tokenData);
             token_decoded = tokenData;
             next();
         }

@@ -2,10 +2,11 @@ var mongoose = require('mongoose');
 var schema = mongoose.Schema;
 
 var favouriteSchema = new schema({
-    userId: Number,
-    items: Array,
-    visibility: String,
-    active_ind: String
+    userId: String,
+    fruitName: String,
+    availability: Number,
+    tax: Number,
+    price: Number,
 })
 
 

@@ -29,7 +29,7 @@ export class AppService {
     return this.http.delete(baseurl,itemjson);
   }
   
-  getFruits(baseurl){
+  getRequest(baseurl){
     return this.http.get(baseurl,httpOptions);
   }
 }
