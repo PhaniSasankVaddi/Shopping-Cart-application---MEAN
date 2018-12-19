@@ -4,6 +4,7 @@ var userModel = require('../models/user_model');
 var cartModel = require('../models/cart_model');
 var fruitModel = require('../models/fruits_model');
 var favModel = require('../models/favourites_model');
+var commentModel = require('../models/comment_model');
 var jwt = require('jsonwebtoken');
 
 
@@ -218,6 +219,7 @@ router.post('/movetoCart', tokenVerification, function(req,res,next){
   
 });
 
+//cart queries
 router.post('/updateItems',tokenVerification, function(req,res,next){
     req.body.items.forEach(item =>{
       fruitModel.findOne({'fruitName':item.fruitName},(error,fruit) =>{
@@ -246,7 +248,53 @@ router.post('/clearCart',tokenVerification, function(req,res,next){
       res.status(200).json({message:'Cart cleared successfully'});
     }
   })
+});
+
+//End of cart queries
+
+//Comment queries
+router.post('/addComment',tokenVerification, function(req,res,next){
+  commentModel.findOne({'username':token_decoded.email,'fruitName':req.body.fruitName},(error,doc) =>{
+    if(doc){
+      commentModel.updateOne({'username':token_decoded.email,'fruitName':req.body.fruitName},
+      {$set:{'rating':req.body.rating,'comment':req.body.comment}},
+      {upsert:true},(error1) =>{
+        if(error1){
+          res.json({message:'Error while updating comment'});
+        }else{
+          res.json({message:'Comment updated successfully'});
+        }
+      });
+    }else{
+      var commentjson = new commentModel({
+        'username':token_decoded.email,
+        'fruitName':req.body.fruitName,
+        'rating':req.body.rating,
+        'comment':req.body.comment,
+        'active_ind':"Y"
+      })
+      
+      let promise = commentjson.save();
+      
+      promise.then(function(comment){
+        res.status(200).json({message:'Comment added successfully'});
+      })
+    }
+  })
+});
+
+router.post('/loadComments', function(req, res, next) {
+    commentModel.find({'fruitName':req.body.fruitName,'active_ind':"Y"})
+                  .sort({'rating':'desc'}).limit(5).exec((error,comments) =>{
+      if(comments){
+        res.status(200).json(comments);
+      }else{
+        res.status(400).json({message:'Error while fetching comments'});
+      }
+    })
 })
+
+//Comment queries
 
 var token_decoded = '';
 function tokenVerification(req,res,next){

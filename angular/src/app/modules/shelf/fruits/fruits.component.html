@@ -1,8 +1,12 @@
+<div class="alert alert-{{state}} alert-dismissible fade show" role="alert" *ngIf= "successInd">
+     <button type="button" class="close" data-dismiss="alert">&times;</button>
+     <strong>{{successMsg}}</strong>
+</div>
 <section>
 	<div class="container">
 	    <h1>Fruit Shelf</h1>
         <ul>
-            <li *ngFor = 'let product of fruits'>
+            <li *ngFor = 'let product of fruits;let i=index'>
                 <div class="row">
                 	<div class="col-sm-2"></div>
 			        <div class="col-sm-8">
@@ -31,21 +35,23 @@
 							                    <p class="card-text">{{product.about}}</p>
 							                    <div class="descriptionField" style="margin:2%">
                         							<label for="aboutfield">Comments</label>
-                        							<textarea class="form-control" id="description_add" rows="2" name = "descriptionField_add" [(ngModel)] = "comment"></textarea>
+                        							<textarea class="form-control" id="description_add" rows="2" name = "descriptionField_add" [(ngModel)] = "commentField"></textarea>
                     							</div>
                     							<div class="ratingInput" style="width:25%; margin:2%">
                     								<label for="ratingfield">Rating</label>
-                    								<input type="text" class="form-control" id="rating" name="ratingField" 
-                        										placeholder="Enter rating" value="5"/>
+                    								<input type="Number" class="form-control" id="rating" name="ratingField" 
+                        										placeholder="Enter rating" value="5" [(ngModel)]="ratingField" min = '1' max='5'/>
                     							</div>
+                    							
 							                    <ul class = "card-comments">
-							                    	<!--<li *ngFor = "let comment of comments; let i=index">
+							                    	<li *ngFor = "let comment of comments; let i=index">
 							                    		{{comment}}
-							                    	</li>-->
+							                    	</li>
 							                    </ul>
 							                    <button type = "button" class = "btn btn-primary" (click)="addtoCart(product.fruitName)">Add to Cart</button>
 							                    <button type = "button" class = "btn btn-primary" (click)="addtoWishlist(product.fruitName)" style="margin-left:5%">Add to Favourites</button>
-							                    <button type = "button" class = "btn btn-primary" (click)="addcomment(product.fruitName,comment)" style="margin-left:5%">Add Comment</button>
+							                    <button type = "button" class = "btn btn-primary" (click)="addcomment(product.fruitName,commentField,ratingField)" style="margin-left:5%">Save Comment</button>
+							                    <button type = "button" class = "btn btn-primary" (click)="getComments(product.fruitName)" style="margin-left:5%">Show Comments</button>
 							              </div>
 							            </div>
 						            </div>

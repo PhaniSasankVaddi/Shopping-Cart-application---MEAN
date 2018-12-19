@@ -11,7 +11,11 @@ export class FruitsComponent implements OnInit {
   
   fruits = [];
   comments = [];
-  score : number = 0;
+  commentField;
+  ratingField;
+  successInd;
+  successMsg;state;
+  
 
   constructor(private appservice: AppService, private router: Router) { 
     this.appservice.getRequest("/fruit/load").subscribe((item:any) =>{
@@ -19,14 +23,6 @@ export class FruitsComponent implements OnInit {
         this.fruits.push(product);
       })
     });
-    
-    /*this.appservice.getRequest("/user/loadComments").subscribe((feedback:any) =>{
-      if(feedback){
-      feedback.forEach(comment =>{
-        this.comments.push(comment);
-      })
-      }
-    })*/
   }
 
   ngOnInit() {
@@ -55,11 +51,50 @@ export class FruitsComponent implements OnInit {
     }
   }
   
-  addcomment(fruitName,commentField){
+  addcomment(fruitName,commentField,ratingField){
+    if(!localStorage.getItem('jwt')){
+      this.router.navigate(['/auth/login']);
+    }else{
+      console.log(!commentField);
+      if(!commentField){
+        this.successInd = true;
+        this.successMsg = "Please enter comment";
+        this.state = "danger";
+        if(!ratingField){
+          this.ratingField=3;
+        }
+      }else{
+      var commentjson = {
+        'fruitName':fruitName,
+        'rating':ratingField,
+        'comment':commentField
+      }
+      this.appservice.postRequest("/user/addComment",commentjson).subscribe((comment:any) =>{
+        if(comment){
+          this.commentField = "";
+          this.ratingField = 0;
+          this.successInd = true;
+          this.successMsg = comment.message;
+          this.state = "success";
+        }
+      })
+    }
+    }
     
   }
-
-
-
+  
+  getComments(fruit){
+    this.comments = [];
+    var fruitInfo = {
+      'fruitName':fruit
+    }
+    this.appservice.postRequest("/user/loadComments",fruitInfo).subscribe((reviews:any) =>{
+      if(reviews){
+        reviews.forEach(review =>{
+        this.comments.push(review.comment+"      - Rating="+review.rating);
+      })
+      }
+    });
+  }
 }
 

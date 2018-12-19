@@ -1,12 +1,13 @@
 <div class = "formcontainer">
     <div class = "formbody">
         <form>
-            <div class="alert alert-danger" role="alert" *ngIf= "loginfail">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf= "loginfail">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
                  <strong>{{loginMsg}}</strong>
             </div>
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" 
-                        value="user" [(ngModel)] = "loginPref" checked>
+                        value="user" [(ngModel)] = "loginPref" checked = "checked">
                 <label class="form-check-label" for="exampleRadios1">User</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" 
                         value="admin" [(ngModel)] = "loginPref">
@@ -22,7 +23,7 @@
                 <input type = "password" class="form-control" name="userpassword" id="password" 
                     [(ngModel)]="password1" placeholder="Enter Password" required/>
             </div>
-            <button type="button" class="btn btn-primary" (click)="onSubmit()">SignIn</button>
+            <button type="button" class="btn btn-primary" (click)="onSubmit($event)">SignIn</button>
         </form>
     </div><br>
     <div class = "entering">
