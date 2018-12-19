@@ -14,6 +14,7 @@ const httpOptions = {
 export class AuthService {
   
   successInd: boolean;
+  info;
   
   baseUrl = "https://ece9065-pvaddi-lab5-pvaddi.c9users.io:8080";
 
@@ -25,8 +26,10 @@ export class AuthService {
     this.http.post(this.baseUrl+route,userInfo).subscribe((data:any) =>{
       if(data){
         this.successInd = true;
+        this.info = data.message;
       }else{
         this.successInd = false;
+        this.info  = "Error occured while registration";
       }
     });
   }
@@ -35,6 +38,7 @@ export class AuthService {
      return this.http.post(this.baseUrl+route,credentials).subscribe((data:any) =>{
         if(data){
           this.successInd = true;
+          this.info = data.message;
           localStorage.setItem('jwt',data);
           if(loginPref == "admin"){
               localStorage.setItem('isAdmin', 'true');
@@ -43,6 +47,7 @@ export class AuthService {
           }
         }else{
           this.successInd = false;
+          this.info = "Error occured while logging in";
         }
       });
   }

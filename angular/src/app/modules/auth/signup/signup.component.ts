@@ -15,7 +15,7 @@ export class SignupComponent implements OnInit {
   username1;
   /*signupPref;*/
   
-  signupPref:boolean;
+  signupfail:boolean;
   signupMsg;
 
   constructor(private authservice: AuthService,
@@ -46,11 +46,15 @@ export class SignupComponent implements OnInit {
     }else{*/
       this.authservice.userRegistration("/user/signup",userInfo);
       if(!this.authservice.successInd){
-        this.signupPref = true;
+        this.signupfail = true;
         this.signupMsg = "!!!Registration Failed"
       }else{
+        this.signupfail = true;
+        this.signupMsg = this.authservice.info;
         this.router.navigate(['/auth/login']);
+        
       }
+      
     //}
   }
 

@@ -124,7 +124,7 @@ router.put('/userStatus', tokenVerification, function(req,res,next){
                 if(error1){
                     return res.json({message: 'Error occured while updating in db'});
                 }else{
-                    return res.json(({message:'User-'+doc.username+'Deactivated'}));
+                    return res.json({message:'User-'+doc.username+' Deactivated'});
                 }
             })
             }else{
@@ -134,7 +134,7 @@ router.put('/userStatus', tokenVerification, function(req,res,next){
                 if(error1){
                     return res.json({message: 'Error occured while updating in db'});
                 }else{
-                    return res.json(({message:'User-'+doc.username+'Activated'}));
+                    return res.json(({message:'User-'+doc.username+' Activated'}));
                 }
             })
             }
@@ -143,7 +143,34 @@ router.put('/userStatus', tokenVerification, function(req,res,next){
     })
 })
 
-router.put('/comment', function(req,res,next){
+router.put('/hideComment', function(req,res,next){
+    commentModel.findOne({'email':req.body.email,'fruitName':req.body.fruitName},(error,doc) =>{
+        if(!doc){
+            return res.json({message:'No comments exists for this user'});
+        }else{
+            if(doc.active_ind=="Y"){
+                commentModel.updateOne({'email':req.body.email,'fruitName':req.body.fruitName},
+                {$set:{'active_ind':"N"}},
+                {upsert:true},(error1) =>{
+                    if(error1){
+                        return res.json({message:'Error occured while updating'});
+                    }else{
+                        return res.json({message:'Users comment hidden'})
+                    }
+                })
+            }else{
+                commentModel.updateOne({'email':req.body.email,'fruitName':req.body.Fruit},
+                {$set:{'active_ind':"Y"}},
+                {upsert:true},(error1) =>{
+                    if(error1){
+                        return res.json({message:'Error occured while updating'});
+                    }else{
+                        return res.json({message:'Users comment hidden'})
+                    }
+                })
+            }
+        }
+    })
     
 });
 

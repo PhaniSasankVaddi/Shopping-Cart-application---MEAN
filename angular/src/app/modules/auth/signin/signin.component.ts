@@ -25,9 +25,7 @@ export class SigninComponent implements OnInit {
   }
   
   onSubmit(e){
-    if(!this.email1 && !this.password1){
-      console.log('email ', !this.email1);
-      console.log('password1 ', !this.password1);
+    if(!this.email1 || !this.password1){
       this.loginfail = true;
       this.loginMsg = "Username and password are mandatory";
       

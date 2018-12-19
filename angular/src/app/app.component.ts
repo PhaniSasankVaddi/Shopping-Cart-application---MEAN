@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   toggleMenu = false;
   authName;
+  Admin:boolean;
   
   constructor(private router : Router) {
     setInterval(() => {
@@ -18,8 +19,14 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     if(localStorage.getItem('jwt')){
       this.authName = 'SignOut';
+      if(localStorage.getItem('isAdmin')){
+        this.Admin = true;
+      }else{
+        this.Admin = false;
+      }
     }else{
       this.authName = 'SignIn';
+      this.Admin = false;
     }
   }
   

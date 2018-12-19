@@ -13,6 +13,7 @@ export class AdminComponent implements OnInit {
   itemName1_delete;
   
   username1_status; userStatus;
+  username1_comment;fruit1_comment;
   
   successMsg;
   successInd: boolean;
@@ -74,9 +75,7 @@ export class AdminComponent implements OnInit {
     }
     this.appservice.putRequest("/admin/userStatus",userjson).subscribe((data:any) =>{
       this.successMsg = data.message;
-      if(data){
-        this.successMsg = true;
-      }
+      this.successInd = true;
     });
   }
   
@@ -86,8 +85,22 @@ export class AdminComponent implements OnInit {
     }
     this.appservice.postRequest("/admin/makeAdmin",userjson).subscribe((data:any) =>{
       if(data){
-        this.successMsg = true;
+        this.successInd = true;
+        this.successMsg = data.message;
       }
     });
+  }
+  
+  showHideComment(){
+    let commentjson = {
+      'email':this.username1_comment,
+      'fruitName':this.fruit1_comment
+    }
+    this.appservice.postRequest("/admin/hideComment",commentjson).subscribe((data:any) =>{
+      if(data){
+        this.successMsg = data.message;
+        this.successInd = true;
+      }
+    })
   }
 }
